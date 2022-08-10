@@ -2,17 +2,14 @@
 const path = require('path');
 const router = require('express').Router();
 
-// this will send the user to index.html upon 
-router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../../public/index/html'));
-});
-
+// this will return the notes.html.
 router.get('/notes', function (req, res) {
-    res.sendFile(path.join(__dirname, '../../public/notes.html'));
+    res.sendFile(path.join(__dirname, '../public/notes.html'));
   });
 
+// this will return the index.html.
 router.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../../public/index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-mpdule.exports = router;
+module.exports = router;

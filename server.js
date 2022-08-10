@@ -1,5 +1,7 @@
 // All requirements below.
 const express = require("express");
+const apiRoutes = require('./Routing/apiRoutes');
+const htmlRoutes = require('./Routing/htmlRoutes');
 
 // Express configuration.
 const app  = express();
@@ -11,8 +13,8 @@ app.use(express.json());
 // This hosts the public folder.
 app.use(express.static("public"));
 
-require("./Routing/apiRoutes/apiRoutes.js");
-require("./Routing/htmlRoutes/htmlRoutes.js");
+require("/api", apiRoutes);
+require("/", htmlRoutes);
 
 // Code to have the server listen.
 app.listen(PORT, function () {
