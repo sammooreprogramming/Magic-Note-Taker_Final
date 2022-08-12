@@ -7,8 +7,9 @@ const PORT = process.env.PORT || 3001;
 const path = require('path');
 // will ask for the data in the db folder (the actual notes data).
 const { notes } = require('./db/db.json');
-const { writeNote, noteConfirm } = require('./lib/functions.js');
+const { writeNote } = require('./lib/functions.js');
 const { uuid } = require('uuidv4');
+const fs = require('fs');
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -44,20 +45,20 @@ app.get('/api/notes', function (req, res) {
 
 // POST Request //
 app.post('api/notes', function (req, res) {
- let noteId  = req.body.id;
- let noteBody = req.body;
- // ID is created based off the next index's array.
- noteId = notes.length.uuid().toString();
-// noteConfirm constant used
- if (noteConfirm(noteBody)) {
-   // writenote constant used
-   const newNote = writeNote(noteBody, notes)
-   res.json(newNote);
- } else { 
-  // return error if necessary.
-  res.status(409).send('The note page was in conflict with webpage standards.');
- }
+  let freshNote = {
+    title: req.body.title,
+    text: req.body.text,
+    id: uuid()
+  };
+  fs.readFile('db/db.json', function (err, data) {
+    if (err) throw err;
+    let parsedData = JSON.parse(data);
+    parsedData.push(freshNote);
+    writeNote();
+  });
 });
+
+ 
 
 
 // DELETE Request (BONUS Request) //
