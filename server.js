@@ -8,6 +8,8 @@ const path = require('path');
 // will ask for the data in the db folder (the actual notes data).
 const { notes } = require('./db/db.json');
 const { writeNote, noteConfirm } = require('./lib/functions.js');
+const { uuid } = require('uuidv4');
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -45,7 +47,7 @@ app.post('api/notes', function (req, res) {
  let noteId  = req.body.id;
  let noteBody = req.body;
  // ID is created based off the next index's array.
- noteId = notes.length.toString();
+ noteId = notes.length.uuid().toString();
 // noteConfirm constant used
  if (noteConfirm(noteBody)) {
    // writenote constant used
