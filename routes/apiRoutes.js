@@ -1,10 +1,16 @@
 // Load Modules
-const router = require('express').Router;
-// will ask for the data in the db folder (the actual notes data).
-const { notes } = require('./db/db.json');
-const { writeNote } = require('./lib/functions.js');
+const router = require('express').Router();
 const { uuid } = require('uuidv4');
 const fs = require('fs');
+
+
+//functions
+function writeNote () {
+    fs.writeFile("./db/db.json",), JSON.stringify(parsedData), function (err) {
+       if (err) throw err;
+    }
+    res.send('This was added correctly!');
+  };
 
 
 // ================= //
@@ -12,16 +18,17 @@ const fs = require('fs');
 // ================= //
 
 // GET Request //
-router.get('/api/notes', function (req, res) {
+router.get('/notes', function (req, res) {
 
-fs.readFile('./db/dbjson', function (err, data) {
+fs.readFile('./db/db.json', function (err, data) {
     if (err) throw err;
-    const notes = JSON.parse(data);
-    res.json(notes);
+    const parsedNotes = JSON.parse(data);
+    res.json(parsedNotes);
     });
 });
   
-  
+
+
   // POST Request //
   router.post('/notes', function (req, res) {
     
@@ -34,7 +41,7 @@ fs.readFile('./db/dbjson', function (err, data) {
     fs.readFile('db/db.json', function (err, data) {
       if (err) throw err;
       let parsedData = JSON.parse(data);
-      // let bodyData = req.body;
+    
       parsedData.push(freshNote);
       writeNote();
     });
@@ -56,3 +63,5 @@ fs.readFile('./db/dbjson', function (err, data) {
       }
     });
   });
+
+module.exports = router;
