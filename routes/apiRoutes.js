@@ -4,15 +4,6 @@ const { uuid } = require('uuidv4');
 const fs = require('fs');
 
 
-//functions
-function writeNote () {
-    fs.writeFile("./db/db.json",), JSON.stringify(parsedData), function (err) {
-       if (err) throw err;
-    }
-    res.send('This was added correctly!');
-  };
-
-
 // ================= //
 //    API Requests   //
 // ================= //
@@ -43,7 +34,11 @@ fs.readFile('./db/db.json', function (err, data) {
       let parsedData = JSON.parse(data);
     
       parsedData.push(freshNote);
-      writeNote();
+      
+      fs.writeFile("./db/db.json",), JSON.stringify(parsedData), function (err) {
+        if (err) throw err;
+     }
+     res.send('This was added correctly!');
     });
   });
   
