@@ -14,7 +14,7 @@ app.use(express.static('public'));
 app.use("/api", apiRoute);
 app.use("/", htmlRoute);
 
-// This actually deploys the listener for the server and runs it.
+// This actually deploys the server and runs it.
 app.listen(PORT, () => {
-  console.log(`API server now live and listening on ${PORT}`)
+  console.log(`API server now live and listening on PORT ${PORT}`)
 });

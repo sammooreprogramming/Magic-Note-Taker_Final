@@ -3,7 +3,6 @@ const router = require('express').Router();
 const { uuid } = require('uuidv4');
 const fs = require('fs');
 
-
 // ================= //
 //    API Requests   //
 // ================= //
@@ -18,7 +17,6 @@ fs.readFile('./db/db.json', function (err, data) {
     });
 });
   
-
 
   // POST Request //
   router.post('/notes', function (req, res) {
