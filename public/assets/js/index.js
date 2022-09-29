@@ -4,13 +4,30 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+let SaveBTN = document.getElementsByClassName('save-note'); 
+SaveBTN[0].style.display = "inline"; 
+SaveBTN[0].addEventListener("click", function(){
+  getElements();
+  localStorage.setItem("SaveNoteTitle", noteTitle.value);//Save to local storage
+  localStorage.setItem("SaveNoteText", noteText.value);
+  if(localStorage.getItem("SaveNoteTitle") !== null)//Check for item by checking for key
+  {
+    //Code here if itemm found
+   // alert("Title: "+localStorage.getItem("SaveNoteTitle")+"\nText: "+localStorage.getItem("SaveNoteText"));//Show item on the screen for testing
+  }
+});
+
 if (window.location.pathname === '/notes') {
+  getElements()
+}
+
+function getElements() {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
-}
+};
 
 // Show an element
 const show = (elem) => {

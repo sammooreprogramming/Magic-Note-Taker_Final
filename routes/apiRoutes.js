@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const { uuid } = require('uuidv4');
 const fs = require('fs');
+const store = require('../db/store');
 
 // ================= //
 //    API Requests   //
@@ -10,11 +11,9 @@ const fs = require('fs');
 // GET Request //
 router.get('/notes', function (req, res) {
 
-fs.readFile('./db/db.json', function (err, data) {
-    if (err) throw err;
-    const parsedNotes = JSON.parse(data);
-    res.json(parsedNotes);
-    });
+store.getNotes().then(function notes () {
+res.json(notes);
+});
 });
   
 
@@ -53,7 +52,7 @@ fs.readFile('./db/db.json', function (err, data) {
     notes.splice(index, 1);
   // returns the JSON data from the element.
     return res.json(element);
-      }
+      };
     });
   });
 
