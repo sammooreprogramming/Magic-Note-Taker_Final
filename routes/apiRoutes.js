@@ -12,35 +12,25 @@ const store = require('../db/store');
 router.get('/notes', function (req, res) {
 
 store.getNotes().then(function notes () {
-res.json(notes);
-});
+res.json(notes).catch(err => {
+  res.status(500).json(err);
+    });
+  });
 });
   
 
   // POST Request //
   router.post('/notes', function (req, res) {
-    
-    let freshNote = {
-      title: req.body.title,
-      text: req.body.text,
-      id: uuid().toString()
-    };
-  
-    fs.readFile('db/db.json', function (err, data) {
-      if (err) throw err;
-      let parsedData = JSON.parse(data);
-    
-      parsedData.push(freshNote);
-      
-      fs.writeFile("./db/db.json",), JSON.stringify(parsedData), function (err) {
-        if (err) throw err;
-     }
-     res.send('This was added correctly!');
+    store.addNote(req.body).then(function note () {
+      res.json(note)
+    }).catch(err => {
+      res.status(500).json(err);
+      });
     });
-  });
   
-  
+
   // DELETE Request (BONUS Request) //
+  
   // first the path to the notes is found to be 'api/notes/:id'
   // then the callback  is used to map and splice the right note away from the array of notes.
   router.delete('api/notes/:id', function (req, res) {
